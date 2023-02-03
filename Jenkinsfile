@@ -92,7 +92,7 @@ pipeline{
         
         stage('Deepfactor Static Scan') {
             steps {
-                sh "dfctl scan dmdeepfactor/dm-springboot-example:1.0"
+                sh "dfctl scan dmancloud/demo-counter-app:1.0.0"
             }
         }   
         }
