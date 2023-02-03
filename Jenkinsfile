@@ -71,9 +71,9 @@ pipeline{
             stage('Docker Build & Push') {
                 steps {
                     script {
-                        withDockerRegistry(credentialsId: '0f55c298-092d-46b4-bbe4-6bcd56c5d9ac') {
-                            sh "docker build -t dmdeepfactor/dm-springboot-example:1.0 ."
-                            sh "docker push dmdeepfactor/dm-springboot-example:1.0"
+                        withDockerRegistry(credentialsId: 'dockerhub') {
+                            sh "docker build -t dmancloud/demo-counter-app:1.0.0 ."
+                            sh "docker push dmancloud/demo-counter-app:1.0.0"
                     }
                  }
              }
