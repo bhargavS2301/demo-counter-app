@@ -1,7 +1,10 @@
 pipeline{
     
     agent any 
-    
+    environment {
+	    
+	    COSIGN_PUBLIC_KEY=credentials('cosign-public-key')
+    }    
     stages {
         
         stage('Git Checkout'){
@@ -79,6 +82,14 @@ pipeline{
              }
             }
         
+	      stages {
+    		stage('verify the container image') {
+      			steps {
+        			sh 'cosign version'
+        			sh 'cosign verify --key $COSIGN_PUBLIC_KEY dmancloud/demo-counter-app:1.0.0-$BUILD_ID'
+      						    }
+    			      }
+  		    }
 
 		stage("Setting Deepfactor RunToken") {
 			steps {
