@@ -77,7 +77,7 @@ pipeline{
                     script {
                         withDockerRegistry(credentialsId: 'dockerhub') {
                             sh "docker build -t dmancloud/demo-counter-app:1.0.0-$BUILD_ID ."
-                            sh "docker push dmancloud/demo-counter-app:1.0.0-$BUILD_ID"
+                            sh "docker push 1`"
                     }
                  }
              }
@@ -86,7 +86,7 @@ pipeline{
       		steps {
 		    script {
         		sh 'cosign version'
-        		sh 'cosign sign --key $COSIGN_PRIVATE_KEY ghcr.io/$IMAGE_NAME:$IMAGE_VERSION'
+        		sh 'cosign sign --key $COSIGN_PRIVATE_KEY dmancloud/demo-counter-app:1.0.0-$BUILD_ID'
 		    }
       }
     }
