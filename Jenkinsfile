@@ -85,12 +85,13 @@ pipeline{
             stage('sign the container image') {
       		steps {
 		    script {
+			withDockerRegistry(credentialsId: 'dockerhub') {
         		sh "cosign version"
         		sh "cosign sign --key $COSIGN_PRIVATE_KEY dmancloud/demo-counter-app:1.0.0-$BUILD_ID"
 		    }
       }
     }
-	     
+}	     
 
 
 		stage("Setting Deepfactor RunToken") {
