@@ -83,7 +83,7 @@ pipeline{
              }
             }
         
-	      stages {
+	     
     		stage('sign the container image') {
       			steps {
         			sh 'cosign version'
