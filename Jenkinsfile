@@ -86,7 +86,7 @@ pipeline{
       		steps {
 		    script {
         		sh "cosign version"
-        		sh 'cosign sign --key $COSIGN_PRIVATE_KEY dmancloud/demo-counter-app:1.0.0-$BUILD_ID'
+        		sh "cosign sign --key $COSIGN_PRIVATE_KEY dmancloud/demo-counter-app:1.0.0-$BUILD_ID"
 		    }
       }
     }
