@@ -1,18 +1,31 @@
-# Use an official OpenJDK runtime as a parent image
-FROM openjdk:8-jre-alpine
+#FROM openjdk:8-jre-alpine
+#RUN apk update && apk add bash
+#WORKDIR /app
+#COPY /target/Uber.jar /app
+#EXPOSE 8080
+#CMD ["java", "-jar", "Uber.jar"]
 
-# set shell to bash
-# source: https://stackoverflow.com/a/40944512/3128926
-RUN apk update && apk add bash
 
-# Set the working directory to /app
-WORKDIR /app
+FROM adoptopenjdk/openjdk11:alpine-slim as build
+WORKDIR /workspace/app
 
-# Copy the fat jar into the container at /app
-COPY /target/Uber.jar /app
+COPY mvnw .
+COPY .mvn .mvn
+COPY pom.xml .
+COPY src src
 
-# Make port 8080 available to the world outside this container
-EXPOSE 8080
+RUN ./mvnw install -DskipTests
+RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
 
-# Run jar file when the container launches
-CMD ["java", "-jar", "Uber.jar"]
+# Run vulnerability scan on build image
+FROM build AS vulnscan
+COPY --from=aquasec/trivy:latest /usr/local/bin/trivy /usr/local/bin/trivy
+RUN trivy rootfs --no-progress /
+
+FROM adoptopenjdk/openjdk11:alpine-slim
+VOLUME /tmp
+ARG DEPENDENCY=/workspace/app/target/dependency
+COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
+COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
+COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
+ENTRYPOINT ["java","-Dserver.port=${PORT}","-cp","app:app/lib/*","com.example.demo.DemoApplication"]
