@@ -4,6 +4,7 @@ pipeline{
     environment {
 	    
 	    COSIGN_PUBLIC_KEY=credentials('cosign-public-key')
+	    COSIGN_PASSWORD=credentials('cosign-password')
     }    
     stages {
         
