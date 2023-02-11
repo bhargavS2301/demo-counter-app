@@ -17,6 +17,6 @@ RUN mvn clean install
 # Package stage
 #
 FROM openjdk:11-jre-slim
-COPY --from=build /home/app/target/Uber.jar /usr/local/lib/demo.jar
+COPY --from=build /target/Uber.jar /usr/local/lib/demo.jar
 EXPOSE 8080
 ENTRYPOINT ["java","-jar","/usr/local/lib/demo.jar"]
