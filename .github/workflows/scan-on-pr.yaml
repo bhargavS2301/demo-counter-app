@@ -9,6 +9,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Build an image from Dockerfile
         run: |
+          curl https://repo.deepfactor.io/install-dfctl.sh | sh -s - --no-package-install --dfrt-image public.ecr.aws/deepfactor/df/runtime:3.2.0-1918
           docker build -t docker.io/dmancloud/demo-counter-app:${{ github.sha }} .
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
