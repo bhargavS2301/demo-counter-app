@@ -81,7 +81,7 @@ pipeline{
                     script {
                         withDockerRegistry(credentialsId: 'dockerhub') {
                             sh "docker build -t dmancloud/demo-counter-app:1.0.0-$BUILD_ID ."
-                            sh "docker push dmancloud/demo-counter-app:1.0.0-$BUILD_ID"
+                            //sh "docker push dmancloud/demo-counter-app:1.0.0-$BUILD_ID"
                     }
                  }
              }
