@@ -1,5 +1,10 @@
 pipeline{   
-    agent any 
+    agent any
+    
+	tools {
+        jdk 'Java11'
+        maven 'maven3'
+        }
    // environment {
 	    
 	    //COSIGN_PRIVATE_KEY =credentials('cosign-private-key')
