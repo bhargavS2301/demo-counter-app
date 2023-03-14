@@ -1,10 +1,10 @@
 pipeline{   
     agent any 
-    environment {
+   // environment {
 	    
 	    //COSIGN_PRIVATE_KEY =credentials('cosign-private-key')
 	    //COSIGN_PASSWORD=credentials('cosign-password')
-    }    
+   // }    
     stages {
         
         stage('Git Checkout'){
