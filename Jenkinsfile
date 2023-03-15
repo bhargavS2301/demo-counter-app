@@ -79,10 +79,10 @@ pipeline{
             stage('Docker Build & Push') {
                 steps {
                     script {
-                        //withDockerRegistry(credentialsId: 'dockerhub') {
-                            sh "docker build -t dmancloud/demo-counter-app:1.0.0-$BUILD_ID ."
-                            //sh "docker push dmancloud/demo-counter-app:1.0.0-$BUILD_ID"
-                    //}
+                        withDockerRegistry(credentialsId: 'dockerhub') {
+                            sh "docker build -t dmancloud/demo-counter-app:1.1.0-$BUILD_ID ."
+                            sh "docker push dmancloud/demo-counter-app:1.1.0-$BUILD_ID"
+                    }
                  }
              }
             }
@@ -91,7 +91,7 @@ pipeline{
 		    //script {
 			//withDockerRegistry(credentialsId: 'dockerhub') {
         		//sh "cosign version"
-        		//sh "cosign sign --key $COSIGN_PRIVATE_KEY dmancloud/demo-counter-app:1.0.0-$BUILD_ID"
+        		//sh "cosign sign --key $COSIGN_PRIVATE_KEY dmancloud/demo-counter-app:1.1.0-$BUILD_ID"
 		   // }
     //  }
    // }
@@ -110,7 +110,7 @@ pipeline{
         
         //stage('Deepfactor Static Scan') {
            // steps {
-            //    sh "dfctl scan dmancloud/demo-counter-app:1.0.0-$BUILD_ID"
+            //    sh "dfctl scan dmancloud/demo-counter-app:1.1.0-$BUILD_ID"
            // }
       //  }   
         }
